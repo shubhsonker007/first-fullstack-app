@@ -12,7 +12,8 @@
   "dependencies": {
     "@clerk/react": "^6.17.4",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "zoom-clone": "file:.."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
