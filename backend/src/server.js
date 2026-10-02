@@ -9,8 +9,6 @@ const app = express();
 const CLIENT_URL = process.env.CLIENT_URL;
 console.log("The CLIENT_URL is " + CLIENT_URL);
 
-const __dirname = path.resolve();
-
 app.use(express.json());
 app.use(cors({origin:CLIENT_URL, credentials:true}));
 app.use("/api/inngest", serve({client: inngest, functions }));
