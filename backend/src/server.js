@@ -17,7 +17,6 @@ app.use(cors({origin:CLIENT_URL, credentials:true}));
 app.use("/api/inngest", serve({client: inngest, functions }));
 
 const PORT = process.env.PORT;
-const NODE_ENV = process.env.NODE_ENV;
 
 
 app.get("/cool", (req, res) => {
@@ -33,14 +32,4 @@ app.get("/hot", (req, res) => {
     })
 })
 
-if(NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-    app.get("/{*any}", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
-    })
-}
-
-app.listen(PORT, () => {
-    console.log("SERVER is running on port " + PORT);
-});
+export default app;
