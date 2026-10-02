@@ -1,13 +1,15 @@
 import { Inngest } from "inngest";
+import mongoose from "mongoose";
+import User from "../models/User.js";
 
 export const inngest = new Inngest({ id: "first-fullstack-app" });
 
 const syncUser = inngest.createFunction(
   {
     id: "sync-user",
-  },
-  {
-    event: "clerk/user.created",
+    triggers: {
+      event: "clerk/user.created",
+    },
   },
   async ({ event }) => {
     console.log(DB_URL);
@@ -25,14 +27,14 @@ const syncUser = inngest.createFunction(
 
     await User.create(newUser);
   },
-)
+);
 
 const deleteUserFromDB = inngest.createFunction(
   {
     id: "delete-user-from-db",
-  },
-  {
-    event: "clerk/user.deleted",
+    triggers: {
+      event: "clerk/user.deleted",
+    },
   },
   async ({ event }) => {
     console.log(DB_URL);
@@ -40,9 +42,8 @@ const deleteUserFromDB = inngest.createFunction(
 
     const { id } = event.data;
 
-    await User.deleteOne({clerkId: id});
-
-    await User.create(newUser);
-  })
+    await User.deleteOne({ clerkId: id });
+  },
+);
 
 export const functions = [syncUser, deleteUserFromDB];

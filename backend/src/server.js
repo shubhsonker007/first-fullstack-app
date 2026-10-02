@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
-import { functions, inngest } from "./lib/inngest";
+import { serve } from "inngest/express";
+import { functions, inngest } from "./lib/inngest.js";
 
 dotenv.config();
 const app = express();
@@ -19,14 +20,25 @@ const PORT = process.env.PORT;
 const NODE_ENV = process.env.NODE_ENV;
 
 
-app.get("/", (req, res) => {
+app.get("/cool", (req, res) => {
     res.status(200).json({
         message: "Success from API",
     })
 })
 
-if(NODE_ENV === production) {
-    
+app.get("/hot", (req, res) => {
+
+    res.status(200).json({
+        message: "This is Hot AF!",
+    })
+})
+
+if(NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+    app.get("/{*any}", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    })
 }
 
 app.listen(PORT, () => {
