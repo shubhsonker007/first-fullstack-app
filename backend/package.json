@@ -15,7 +15,6 @@
     "dotenv": "^18.0.4",
     "express": "^5.2.1",
     "inngest": "^4.21.0",
-    "mongoose": "^9.10.3",
-    "zoom-clone": "file:.."
+    "mongoose": "^9.10.3"
   }
 }
